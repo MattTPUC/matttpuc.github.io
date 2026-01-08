@@ -233,36 +233,6 @@
     </section>
   </div>
 
-  <!-- FIXED: safe performance timing beacon (won’t throw ReferenceError) -->
-  <script type="text/javascript">
-    (function() {
-      if (!window.performance || !window.performance.timing) return;
-
-      window.addEventListener("load", function() {
-        setTimeout(function() {
-          var meta = document.querySelector("meta[name='leadpages-serving-domain']");
-          if (!meta || !meta.content) return;
-
-          if (meta.content !== location.hostname) {
-            var t = window.performance.timing;
-            (new Image()).src =
-              "https://api.leadpages.io/analytics/v1/observations/capture?version=1.7.13&origin=page-speed&kind=timer,timer,timer,timer,timer,timer,timer,timer,timer,timer&label=domain-lookup,connect,request,ttfb,response,loading,interactive,content-loaded,complete,load&value=" +
-              [
-                t.domainLookupEnd - t.domainLookupStart,
-                t.connectEnd - t.connectStart,
-                t.responseStart - t.requestStart,
-                t.responseStart - t.fetchStart,
-                t.responseEnd - t.responseStart,
-                t.domLoading - t.fetchStart,
-                t.domInteractive - t.fetchStart,
-                t.domContentLoadedEventEnd - t.fetchStart,
-                t.domComplete - t.fetchStart,
-                (t.loadEventEnd || t.loadEventStart) - t.fetchStart
-              ].join(",");
-          }
-        }, 0);
-      });
-    }());
-  </script>
+  
 </body>
 </html>
